@@ -23,3 +23,5 @@
 - [x] Add signed-in user Bring Your Own Key account settings for a user-managed OpenAI Platform API key
 - [x] Store each user’s OpenAI credential server-side with encryption and never return it to the client
 - [x] Add protected per-user validation and assistant endpoints that use only the requesting user’s credential
+- [x] Synchronize the latest per-user OpenAI connection update to the private fear-the-wolves GitHub repository
+- [x] Prepare Google Play Store release configuration, credential guidance, and the managed publishing handoff
