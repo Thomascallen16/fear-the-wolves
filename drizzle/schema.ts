@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, uniqueIndex, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -25,4 +25,23 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+/**
+ * Encrypted, user-owned OpenAI connection metadata. The raw key is never
+ * returned through the API and is stored only as AES-GCM ciphertext.
+ */
+export const userOpenAIConnections = mysqlTable(
+  "user_openai_connections",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    userId: int("user_id").notNull(),
+    encryptedApiKey: text("encrypted_api_key").notNull(),
+    keyHint: varchar("key_hint", { length: 16 }).notNull(),
+    model: varchar("model", { length: 64 }).notNull().default("gpt-5.6"),
+    validatedAt: timestamp("validated_at").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  },
+  (table) => [uniqueIndex("user_openai_connections_user_id_unique").on(table.userId)],
+);
+
+export type UserOpenAIConnection = typeof userOpenAIConnections.$inferSelect;

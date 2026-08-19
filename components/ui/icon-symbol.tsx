@@ -9,6 +9,7 @@ type IconSymbolName = keyof typeof MAPPING;
 const MAPPING = {
   "house.fill": "home",
   "books.vertical.fill": "auto-stories",
+  "sparkles": "auto-awesome",
   "folder.fill": "folder",
   "gearshape.fill": "settings",
   "paperplane.fill": "send",

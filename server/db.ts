@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, userOpenAIConnections, users } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,45 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+export async function getOpenAIConnection(userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Secure credential storage is temporarily unavailable.");
+
+  const result = await db.select().from(userOpenAIConnections).where(eq(userOpenAIConnections.userId, userId)).limit(1);
+  return result[0];
+}
+
+export async function saveOpenAIConnection({
+  userId,
+  encryptedApiKey,
+  keyHint,
+  validatedAt,
+}: {
+  userId: number;
+  encryptedApiKey: string;
+  keyHint: string;
+  validatedAt: Date;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Secure credential storage is temporarily unavailable.");
+
+  await db.insert(userOpenAIConnections).values({
+    userId,
+    encryptedApiKey,
+    keyHint,
+    validatedAt,
+  }).onDuplicateKeyUpdate({
+    set: {
+      encryptedApiKey,
+      keyHint,
+      validatedAt,
+      updatedAt: new Date(),
+    },
+  });
+}
+
+export async function removeOpenAIConnection(userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Secure credential storage is temporarily unavailable.");
+  await db.delete(userOpenAIConnections).where(eq(userOpenAIConnections.userId, userId));
+}

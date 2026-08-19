@@ -13,5 +13,13 @@
 - [x] Add practical guardrails and source-verification cues for trade, legal-education, and investigation prompts
 - [x] Extend Library search and category discovery for the expanded career and activity catalog
 - [x] Create checkpoint-safe lightweight local copies of the Prompt Bridge native icon assets
-- [ ] Save the recovered delivery checkpoint after icon optimization
-- [ ] Create and push the completed project to a dedicated private GitHub repository named fear-the-wolves
+- [x] Save the recovered delivery checkpoint after icon optimization
+- [x] Create and push the completed project to a dedicated private GitHub repository named fear-the-wolves
+- [x] Add a secure server-side OpenAI integration without exposing the API key to the mobile client
+- [x] Add an in-app assistant for refining prompts, drafting research handoffs, coaching communication, and guiding multi-domain tasks
+- [x] Validate the assistant endpoint with a configured credential and add user-facing setup guidance
+- [ ] Replace the mistakenly supplied Expo credential with a valid OpenAI Platform API key before enabling the assistant
+- [x] Add a clear account-settings connection flow that distinguishes Expo project credentials from the separate OpenAI assistant credential
+- [x] Add signed-in user Bring Your Own Key account settings for a user-managed OpenAI Platform API key
+- [x] Store each user’s OpenAI credential server-side with encryption and never return it to the client
+- [x] Add protected per-user validation and assistant endpoints that use only the requesting user’s credential

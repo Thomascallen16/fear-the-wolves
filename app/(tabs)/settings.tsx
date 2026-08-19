@@ -3,6 +3,7 @@ import * as Clipboard from "expo-clipboard";
 import { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
+import { OpenAIConnectionCard } from "@/components/openai-connection-card";
 import { ScreenContainer } from "@/components/screen-container";
 import { haptic } from "@/lib/haptics";
 
@@ -37,6 +38,8 @@ export default function SettingsScreen() {
           <MaterialIcons name="privacy-tip" size={21} color="#6C5BA7" />
           <Text style={styles.tipText}>Keep current case facts, source URLs, and changing research conclusions in your own archive, not persistent memory.</Text>
         </View>
+
+        <OpenAIConnectionCard />
 
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Custom Instructions</Text>
