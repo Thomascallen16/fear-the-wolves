@@ -25,3 +25,5 @@
 - [x] Add protected per-user validation and assistant endpoints that use only the requesting user’s credential
 - [x] Synchronize the latest per-user OpenAI connection update to the private fear-the-wolves GitHub repository
 - [x] Prepare Google Play Store release configuration, credential guidance, and the managed publishing handoff
+- [x] Diagnose and resolve the current Prompt Bridge launch failure
+- [x] Package the Prompt Bridge implementation workflow as a reusable skill using the skill-creator process
