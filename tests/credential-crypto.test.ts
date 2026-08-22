@@ -4,7 +4,7 @@ import { credentialHint, decryptCredential, encryptCredential } from "../server/
 
 describe("user credential encryption", () => {
   it("encrypts and decrypts an API key without returning the raw value in its stored payload", () => {
-    const apiKey = "sk-example-user-owned-key-1234567890";
+    const apiKey = "not_a_real_openai_key_7890";
     const stored = encryptCredential(apiKey, "test-session-secret");
 
     expect(stored).not.toContain(apiKey);
@@ -13,7 +13,7 @@ describe("user credential encryption", () => {
   });
 
   it("refuses to decrypt with a different project secret", () => {
-    const stored = encryptCredential("sk-example-user-owned-key-1234567890", "first-secret");
+    const stored = encryptCredential("not_a_real_openai_key_7890", "first-secret");
     expect(() => decryptCredential(stored, "second-secret")).toThrow();
   });
 });
