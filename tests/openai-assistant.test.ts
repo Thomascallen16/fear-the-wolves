@@ -14,10 +14,10 @@ describe("OpenAI assistant server client", () => {
     const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({ data: [] }), { status: 200 }));
     global.fetch = fetchMock;
 
-    await expect(validateOpenAIKey("sk-user-example-1234567890")).resolves.toBe(true);
+    await expect(validateOpenAIKey("not_a_real_openai_key_7890")).resolves.toBe(true);
     expect(fetchMock).toHaveBeenCalledWith(
       "https://api.openai.com/v1/models",
-      expect.objectContaining({ headers: expect.objectContaining({ Authorization: "Bearer sk-user-example-1234567890" }) }),
+      expect.objectContaining({ headers: expect.objectContaining({ Authorization: "Bearer not_a_real_openai_key_7890" }) }),
     );
   });
 
@@ -28,13 +28,13 @@ describe("OpenAI assistant server client", () => {
     global.fetch = fetchMock;
 
     await expect(requestAssistant({
-      apiKey: "sk-user-example-1234567890",
+      apiKey: "not_a_real_openai_key_7890",
       mode: "refine",
       prompt: "Make my prompt clearer.",
     })).resolves.toEqual({ answer: "Ready-to-paste prompt", model: "gpt-5.6" });
 
     const [, request] = fetchMock.mock.calls[0] as [string, RequestInit];
-    expect(request.headers).toEqual(expect.objectContaining({ Authorization: "Bearer sk-user-example-1234567890" }));
+    expect(request.headers).toEqual(expect.objectContaining({ Authorization: "Bearer not_a_real_openai_key_7890" }));
     expect(request.body).toContain("Make my prompt clearer.");
   });
 });
