@@ -1,18 +1,9 @@
 name: Validate Prompt Bridge
-
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
-
-concurrency:
-  group: prompt-bridge-ci
-  cancel-in-progress: true
 
 jobs:
   validate:
@@ -21,35 +12,26 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
-
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9.12.0
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: pnpm
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
       - name: Type check
         run: pnpm check
-
       - name: Lint
         run: pnpm lint
-
       - name: Test
         run: pnpm test
-
       - name: Build server
         run: pnpm build
-
       - name: Export web bundle for smoke validation
         run: npx expo export --platform web
-
       - name: Verify web export exists
         run: test -f dist/index.html
