@@ -5,7 +5,7 @@ const config = getDefaultConfig(__dirname);
 
 module.exports = withNativeWind(config, {
   input: "./global.css",
-  // Force write CSS to file system instead of virtual modules
-  // This fixes iOS styling issues in development mode
-  forceWriteFileSystem: true,
+  // Keep the native-development workaround, but let Metro manage the CSS
+  // module during Expo's static web-export smoke test.
+  forceWriteFileSystem: process.env.EXPO_WEB_EXPORT !== "1",
 });
